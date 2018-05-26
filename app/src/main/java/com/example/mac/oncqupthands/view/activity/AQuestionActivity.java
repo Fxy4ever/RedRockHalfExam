@@ -54,8 +54,6 @@ public class AQuestionActivity extends AppCompatActivity {
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
     }
     private void initView(){
         back = findViewById(R.id.answerQ_back);

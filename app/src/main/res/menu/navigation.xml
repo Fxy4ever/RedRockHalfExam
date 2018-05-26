@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_kebiao"
+        android:icon="@drawable/bottom_kebiao1"
+        android:title="课表" />
+
+    <item
+        android:id="@+id/navigation_question"
+        android:icon="@drawable/bottom_question1"
+        android:title="邮问" />
+
+    <item
+        android:id="@+id/navigation_user"
+        android:icon="@drawable/bottom_user1"
+        android:title="我的" />
+
+</menu>

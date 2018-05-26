@@ -231,7 +231,7 @@ public class NetUtil{
 
     public interface  Callback{
         void onSucceed(String response) throws JSONException;
-        void onFailed(String response);
+        void onFailed(String response) throws JSONException;
     }
 
 }

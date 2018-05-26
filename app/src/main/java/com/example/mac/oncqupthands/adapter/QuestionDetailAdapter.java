@@ -1,6 +1,7 @@
 package com.example.mac.oncqupthands.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -14,13 +15,23 @@ import com.example.frecyclerview.BaseHolder;
 import com.example.frecyclerview.MultiLayoutBaseAdapter;
 import com.example.mac.oncqupthands.R;
 import com.example.mac.oncqupthands.bean.QuestionDetailBean;
+import com.example.mac.oncqupthands.config.Api;
+import com.example.mac.oncqupthands.utils.NetUtil;
 import com.example.mac.oncqupthands.utils.ShapeImageView;
 import com.example.mac.oncqupthands.utils.TimeUtil;
 import com.example.mac.oncqupthands.utils.UrlUtil;
+import com.example.mac.oncqupthands.view.activity.AQuestionActivity;
+import com.example.mac.oncqupthands.view.activity.CommentActivity;
+import com.example.mac.oncqupthands.view.activity.QuestionDetailActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import config.RequestOptions;
 import start.ImageLoader;
@@ -35,6 +46,13 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
     List<QuestionDetailBean> datalist;
     String create_time = QuestionListAdapter.create_time;
     boolean isLoad=false;
+    public static String KIND;
+    public static String CONTENT;
+    public static String AS_ID;
+    public static QuestionDetailBean.AnswersBean answersBean;
+    public static String quesion_ID;
+    private boolean isPraise = false;
+    private int num1;
     public QuestionDetailAdapter(Context context,  List<QuestionDetailBean> data, int[] layoutIds) {
         super(context, data, layoutIds);
         this.datalist = data;
@@ -59,7 +77,7 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
             .setPreloadPic(R.mipmap.ic_launcher_round)
             .setErrorPic(R.mipmap.ic_launcher);
     @Override
-    public void onBinds(BaseHolder baseHolder, Object o, int i, int i1) {
+    public void onBinds(BaseHolder baseHolder, Object o, final int i, int i1) {
         switch (i1){
             case 0:
                 TextView title = baseHolder.getView(R.id.detail_title);
@@ -78,7 +96,7 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                         .into(avatar)
                         .apply(options)
                         .display();
-                ImageView gender = baseHolder.getView(R.id.detail_gender);
+                final ImageView gender = baseHolder.getView(R.id.detail_gender);
                 try {
                     String gender1 = URLDecoder.decode(datalist.get(0).getQuestioner_gender(),"UTF-8");
                     if(gender1.equals("女")){
@@ -103,10 +121,11 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                 TextView content1 = baseHolder.getView(R.id.detail_normal_content);
                 TextView create_time = baseHolder.getView(R.id.detail_normal_createTime);
                 TextView commit_num = baseHolder.getView(R.id.detail_normal_commit_num);
-                TextView good_num = baseHolder.getView(R.id.detail_normal_good_num);
+                final TextView good_num = baseHolder.getView(R.id.detail_normal_good_num);
                 ImageButton commit = baseHolder.getView(R.id.detail_normal_commit);
-                ImageButton good = baseHolder.getView(R.id.detail_normal_good);
+                final ImageButton good = baseHolder.getView(R.id.detail_normal_good);
                 Log.d("Fxy", "onBinds: "+datalist.get(0).getAnswers().size());
+                num1 = Integer.valueOf(datalist.get(0).getAnswers().get(i-1).getPraise_num());
                 if(datalist.get(0).getAnswers().size()!=0){
                     ImageLoader.with(getContext())
                             .load(UrlUtil.addS(datalist.get(0).getAnswers().get(i-1).getPhoto_thumbnail_src()))
@@ -120,7 +139,6 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-
                     content1.setText(datalist.get(0).getAnswers().get(i-1).getContent());
                     create_time.setText(datalist.get(0).getAnswers().get(i-1).getCreated_at());
                     commit_num.setText(datalist.get(0).getAnswers().get(i-1).getComment_num());
@@ -132,10 +150,99 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
 
                     }
                 });
+                Map<String,String> map = new HashMap<>();
+                map.put("stuNum","2017211851");
+                map.put("idNum","091219");
+                map.put("answer_id",datalist.get(0).getAnswers().get(i-1).getId());
+                NetUtil.Post(Api.praise, map, new NetUtil.Callback() {
+                    @Override
+                    public void onSucceed(String response) throws JSONException {
+                        Map<String,String> map = new HashMap<>();
+                        map.put("stuNum","2017211851");
+                        map.put("idNum","091219");
+                        map.put("answer_id",datalist.get(0).getAnswers().get(i-1).getId());
+                        NetUtil.Post(Api.cancelPraise, map, new NetUtil.Callback() {
+                            @Override
+                            public void onSucceed(String response) throws JSONException {
+
+                            }
+                            @Override
+                            public void onFailed(String response) {
+
+                            }
+                        });
+                    }
+                    @Override
+                    public void onFailed(String response) throws JSONException {
+                        JSONObject jsonObject =new JSONObject(response);
+                        if(jsonObject.getString("info").equals("you have praise the answer once")){
+                            isPraise=true;
+                            good.setBackgroundResource(R.drawable.good_succeed);
+                        }
+                    }
+                });
                 good.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (!isPraise) {
+                            Map<String, String> map = new HashMap<>();
+                            map.put("stuNum", "2017211851");
+                            map.put("idNum", "091219");
+                            map.put("answer_id",datalist.get(0).getAnswers().get(i-1).getId());
+                            NetUtil.Post(Api.praise, map, new NetUtil.Callback() {
+                                @Override
+                                public void onSucceed(String response) throws JSONException {
+                                    Log.d("Fxy", "Praise onSucceed: ");
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    if (jsonObject.getInt("status") == 200) {
+                                        isPraise = true;
+                                        num1++;
+                                        good_num.setText(num1+"");
+                                        good.setBackgroundResource(R.drawable.good_succeed);
+                                    }
+                                }
 
+                                @Override
+                                public void onFailed(String response) {
+
+                                }
+                            });
+                        } else {
+                            Map<String, String> map = new HashMap<>();
+                            map.put("stuNum", "2017211851");
+                            map.put("idNum", "091219");
+                            map.put("answer_id", datalist.get(0).getAnswers().get(i-1).getId());
+                            NetUtil.Post(Api.cancelPraise, map, new NetUtil.Callback() {
+                                @Override
+                                public void onSucceed(String response) throws JSONException {
+                                    Log.d("Fxy", "Cancel onSucceed: ");
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    if (jsonObject.getInt("status") == 200) {
+                                        isPraise = false;
+                                        num1--;
+                                        good_num.setText(num1+"");
+                                        good.setBackgroundResource(R.drawable.good);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailed(String response) {
+
+                                }
+                            });
+                        }
+                    }
+                });
+
+                baseHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        KIND = datalist.get(0).getKind();
+                        CONTENT = datalist.get(0).getDescription();
+                        AS_ID = datalist.get(0).getAnswers().get(i-1).getId();
+                        answersBean = datalist.get(0).getAnswers().get(i-1);
+                        Intent intent = new Intent(getContext(), CommentActivity.class);
+                        getContext().startActivity(intent);
                     }
                 });
                 break;
@@ -149,4 +256,5 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
     }
+
 }

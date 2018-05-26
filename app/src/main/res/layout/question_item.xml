@@ -57,7 +57,7 @@
 
                         <ImageView
                             android:id="@+id/question_gender"
-                            android:layout_width="13dp"
+                            android:layout_width="10dp"
                             android:layout_height="13dp"
                             android:layout_marginLeft="3dp"
                             android:background="@drawable/boy" />

@@ -6,7 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.mac.oncqupthands.view.activity.QuestionDetailActivity">
-
+    <View
+        android:background="@drawable/color_gradual"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"/>
     <android.support.v7.widget.Toolbar
         android:id="@+id/comment_toolbar"
         android:layout_width="match_parent"
@@ -69,11 +72,13 @@
                         android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
-                        <ImageView
+                        <Button
+                            android:id="@+id/comment_good"
                             android:background="@drawable/good"
                             android:layout_width="25dp"
                             android:layout_height="25dp" />
                         <TextView
+                            android:id="@+id/comment_good_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="点赞(0)"
@@ -99,11 +104,13 @@
                         android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
-                        <ImageView
+                        <Button
+                            android:id="@+id/comment_comments"
                             android:background="@drawable/comment1"
                             android:layout_width="25dp"
                             android:layout_height="25dp" />
                         <TextView
+                            android:id="@+id/comment_comments_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="评论(0)"

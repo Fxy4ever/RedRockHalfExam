@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".view.activity.QuestionListActivity"
+            android:name=".view.activity.WelcomeActivity"
             android:label="掌上重邮">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,9 @@
         <activity android:name=".view.activity.LoginActivity" />
         <activity android:name=".view.activity.QuestionDetailActivity" />
         <activity android:name=".view.activity.AskQuestionActivity" />
-        <activity android:name=".view.activity.CommentActivity"></activity>
+        <activity android:name=".view.activity.CommentActivity" />
+        <activity android:name=".view.activity.AQuestionActivity" />
+        <activity android:name=".view.activity.QuestionListActivity"></activity>
     </application>
 
 </manifest>

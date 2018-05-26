@@ -6,10 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.mac.oncqupthands.view.activity.AskQuestionActivity">
 
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <View
+            android:background="@drawable/color_gradual"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"/>
         <android.support.v7.widget.Toolbar
             android:id="@+id/ask_toolbar"
             android:background="@drawable/color_gradual"

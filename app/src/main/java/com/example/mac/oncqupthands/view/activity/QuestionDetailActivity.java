@@ -1,7 +1,10 @@
 package com.example.mac.oncqupthands.view.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.mac.oncqupthands.R;
 import com.example.mac.oncqupthands.adapter.QuestionDetailAdapter;
@@ -29,6 +33,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private QuestionDetailAdapter adapter;
     private Button back;
+    private TextView showNothing;
     private LinearLayout ignore;
     private LinearLayout help;
     private List<QuestionDetailBean> datalist;
@@ -40,12 +45,23 @@ public class QuestionDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question_detail);
         initView();
         initRecyclerView();
+        initChenjin();
+    }
+    private void initChenjin(){
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
     }
     private void initView(){
         recyclerView = findViewById(R.id.question_detail_recylcerview);
         back = findViewById(R.id.question_back);
+        showNothing = findViewById(R.id.question_showNothing);
         ignore = findViewById(R.id.question_ignore);
-        help = findViewById(R.id.question_help);
+        help = findViewById(R.id.question_detail_help);
         datalist = new ArrayList<>();
         adapter = new QuestionDetailAdapter(this,datalist,layout);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -56,13 +72,14 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 QuestionDetailActivity.this.finish();
             }
         });
-        ignore.setOnClickListener(new View.OnClickListener() {
+        help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(QuestionDetailActivity.this, AQuestionActivity.class);
+                startActivity(intent);
             }
         });
-        help.setOnClickListener(new View.OnClickListener() {
+        ignore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -79,6 +96,9 @@ public class QuestionDetailActivity extends AppCompatActivity {
             public void onSucceed(String response) {
                 Log.d("Fxy", "onSucceed: "+response);
                 JsonUtil.AddQuesDetailData(response,datalist);
+                if(datalist.get(0).getAnswers().size()!=0){
+                    showNothing.setText("");
+                }
                 adapter.notifyDataSetChanged();
             }
 
@@ -88,4 +108,5 @@ public class QuestionDetailActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import com.example.mac.oncqupthands.bean.QuestionDetailBean;
+import com.example.mac.oncqupthands.bean.RemarkBean;
 import com.example.mac.oncqupthands.bean.UserBean;
 import com.example.mac.oncqupthands.mUser;
 
@@ -111,7 +112,7 @@ public class JsonUtil<T> {
                     bean1.setNickname(jsonObject1.getString("nickname"));
                     bean1.setPhoto_thumbnail_src(jsonObject1.getString("photo_thumbnail_src"));
                     bean1.setGender(jsonObject1.getString("gender"));
-                    bean1.setContent(jsonObject1.getString("gender"));
+                    bean1.setContent(jsonObject1.getString("content"));
                     bean1.setCreated_at(jsonObject1.getString("created_at"));
                     bean1.setPraise_num(jsonObject1.getString("praise_num"));
                     bean1.setComment_num(jsonObject1.getString("comment_num"));
@@ -146,5 +147,28 @@ public class JsonUtil<T> {
         userBean.setUpdated_time(jsonObject.getString("updated_time"));
         userBean.setPhone(jsonObject.getString("phone"));
         userBean.setPhone(jsonObject.getString("qq"));
+    }
+
+    public static void AddRemardInfo(String response, List<RemarkBean> datalist){
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            if(!jsonObject.isNull("data")){
+                String data = JsonToString(response,"data");
+                JSONArray jsonArray = new JSONArray(data);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                    RemarkBean bean = new RemarkBean();
+                    bean.setContent(jsonObject1.getString("content"));
+                    bean.setCreated_at(jsonObject1.getString("created_at"));
+                    bean.setNickname(jsonObject1.getString("nickname"));
+                    bean.setGender(jsonObject1.getString("gender"));
+                    datalist.add(bean);
+                }
+                RemarkBean bean = new RemarkBean();
+                datalist.add(bean);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

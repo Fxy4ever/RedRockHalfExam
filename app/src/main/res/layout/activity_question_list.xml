@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.mac.oncqupthands.view.activity.QuestionListActivity">
 
+    <View
+        android:background="@drawable/color_gradual"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"/>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -29,8 +34,8 @@
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:itemIconTint="#1A2024"
-        app:itemTextColor="#1A2024"
+        app:itemIconTint="@color/colore_item"
+        app:itemTextColor="@color/colore_item"
         android:background="?android:attr/windowBackground"
         app:menu="@menu/navigation" />
 

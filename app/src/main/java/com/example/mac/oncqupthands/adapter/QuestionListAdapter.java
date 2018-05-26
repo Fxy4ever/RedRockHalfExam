@@ -110,6 +110,7 @@ public class QuestionListAdapter<T> extends MultiLayoutBaseAdapter {
                     @Override
                     public void onClick(View v) {
                         question_id = String.valueOf(datalist.get(i).getId());
+                        Log.d("Fxy", "onClick: "+question_id);
                         create_time = datalist.get(i).getCreated_at();
                         Intent intent = new Intent(getContext(), QuestionDetailActivity.class);
                         getContext().startActivity(intent);

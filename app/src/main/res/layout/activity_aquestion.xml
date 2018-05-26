@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.mac.oncqupthands.view.activity.AQuestionActivity">
+    <View
+        android:background="@drawable/color_gradual"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"/>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/color_gradual"
+        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/answerQ_back"
+                android:text="取消"
+                android:background="@null"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:layout_gravity="center|left"
+                android:layout_width="40dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:text="提供帮助"
+                android:layout_marginRight="10dp"
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/answerQ_commit"
+                android:text="提交"
+                android:background="@null"
+                android:textSize="16sp"
+                android:layout_marginRight="15dp"
+                android:textColor="#FFFFFF"
+                android:layout_gravity="center|right"
+                android:layout_width="40dp"
+                android:layout_height="30dp" />
+        </FrameLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+        <EditText
+            android:id="@+id/answerQ_content"
+            android:background="@null"
+            android:layout_marginLeft="15dp"
+            android:hint="请尽可能给出明确的解决思路哦！"
+            android:gravity="top"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+        <TextView
+            android:id="@+id/answerQ_contentNum"
+            android:text="300"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="right|bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_gravity="bottom"
+            android:background="#F2F4F5"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+    </FrameLayout>
+    <Button
+        android:id="@+id/answerQ_addPhoto"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/jiahao"
+        android:layout_width="120dp"
+        android:layout_height="120dp" />
+
+</LinearLayout>

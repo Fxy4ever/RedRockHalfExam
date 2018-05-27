@@ -26,3 +26,9 @@
 4.`身体很重要！`<br>
 5....太多了<br>
 
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/1.jpg"/><br>
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/2.jpg"/><br>
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/3.jpg"/><br>
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/4.jpg"/><br>
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/5.jpg"/><br>
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/6.jpg"/><br>

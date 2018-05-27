@@ -120,4 +120,8 @@ public class CommentsAdapter<T> extends MultiLayoutBaseAdapter {
 
     }
 
+    public void refresh(List<RemarkBean> list){
+        datalist = list;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.example.mac.oncqupthands.view.activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ import com.example.mac.oncqupthands.utils.ToastUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +59,7 @@ public class CommentActivity extends AppCompatActivity {
     private int[] layouts={R.layout.comment_header,R.layout.comment_normal};
     private boolean isPraise = false;
     private LinearLayout parent;
+    private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,7 @@ public class CommentActivity extends AppCompatActivity {
         initData();
         initChenjin();
         initPop();
+        initRefresh();
     }
     private void initChenjin(){
         if (Build.VERSION.SDK_INT >= 21) {
@@ -230,7 +235,12 @@ public class CommentActivity extends AppCompatActivity {
                 map.put("stuNum",user.getStuNum());
                 map.put("idNum",user.getIdNum());
                 map.put("answer_id",QuestionDetailAdapter.answersBean.getId());
-                map.put("content",comment1.getText().toString());
+                try {
+                    map.put("content", URLEncoder.encode(comment1.getText().toString(),"utf-8"));
+                    Log.d("Fxy", "onClick: "+comment1.getText().toString());
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 if(comment1.getText().toString().length()>0){
                     NetUtil.Post(Api.remark, map, new NetUtil.Callback() {
                         @Override
@@ -240,6 +250,7 @@ public class CommentActivity extends AppCompatActivity {
                                     ,"评论成功")
                                     .setColor(Color.WHITE,Color.BLACK)
                                     .show(3000);
+                            popupWindow1.dismiss();
                         }
 
                         @Override
@@ -252,6 +263,38 @@ public class CommentActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+    }
+
+    private void initRefresh(){
+        swipeRefreshLayout = findViewById(R.id.comment_swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+    }
+    private void refresh(){
+        swipeRefreshLayout.setRefreshing(false);
+        datalist.clear();
+        adapter.notifyDataSetChanged();
+        Map<String,String> map = new HashMap<>();
+        map.put("stuNum",user.getStuNum());
+        map.put("idNum",user.getIdNum());
+        map.put("answer_id",QuestionDetailAdapter.AS_ID);
+        NetUtil.Post(Api.getRemarkList, map, new NetUtil.Callback() {
+            @Override
+            public void onSucceed(String response) throws JSONException {
+                JsonUtil.AddRemardInfo(response,datalist);
+                adapter.refresh(datalist);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailed(String response) {
+
             }
         });
     }

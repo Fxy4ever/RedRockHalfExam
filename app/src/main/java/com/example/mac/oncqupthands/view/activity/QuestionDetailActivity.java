@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +46,8 @@ public class QuestionDetailActivity extends AppCompatActivity {
     private List<QuestionDetailBean> datalist;
     private int layout[] ={R.layout.detail_header,R.layout.detail_normal,R.layout.question_footer};
     private mUser user;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
         initView();
         initRecyclerView();
         initChenjin();
+        initRefresh();
     }
     private void initChenjin(){
         if (Build.VERSION.SDK_INT >= 21) {
@@ -125,5 +129,42 @@ public class QuestionDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void initRefresh(){
+        swipeRefreshLayout = findViewById(R.id.question_detail_swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+    }
+
+    private void refresh(){
+        swipeRefreshLayout.setRefreshing(false);
+        datalist.clear();
+        adapter.notifyDataSetChanged();
+        Map<String,String> map = new HashMap<>();
+        map.put("question_id",questionId);
+        map.put("idNum",user.getIdNum());
+        map.put("stuNum",user.getStuNum());
+        NetUtil.Post(Api.getDetailedInfo, map, new NetUtil.Callback() {
+            @Override
+            public void onSucceed(String response) {
+                Log.d("Fxy", "onSucceed: "+response);
+                JsonUtil.AddQuesDetailData(response,datalist);
+                adapter.refresh(datalist);
+                if(datalist.get(0).getAnswers().size()!=0){
+                    showNothing.setText("");
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailed(String response) {
+
+            }
+        });
+     }
 
 }

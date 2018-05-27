@@ -42,6 +42,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -219,7 +220,11 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                         map.put("stuNum",user.getStuNum());
                         map.put("idNum",user.getIdNum());
                         map.put("answer_id",datalist.get(0).getAnswers().get(i-1).getId());
-                        map.put("content",comment1.getText().toString());
+                        try {
+                            map.put("content", URLEncoder.encode(comment1.getText().toString(),"utf-8"));
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
                         if(comment1.getText().toString().length()>0){
                             NetUtil.Post(Api.remark, map, new NetUtil.Callback() {
                                 @Override
@@ -229,6 +234,7 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                                             ,"评论成功")
                                             .setColor(Color.WHITE,Color.BLACK)
                                             .show(3000);
+                                    popupWindow1.dismiss();
                                 }
 
                                 @Override
@@ -345,13 +351,14 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                 break;
         }
     }
-    private void loadMore(){
 
-    }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
     }
 
+    public void refresh(List<QuestionDetailBean> datalist1){
+        datalist = datalist1;
+    }
 }

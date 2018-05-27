@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="100dp"
     android:orientation="vertical"
-    android:background="#FFFFFF"
-    android:layout_height="wrap_content">
+    android:background="@drawable/bg_answer_list_more"
+    android:layout_height="100dp">
    <LinearLayout
        android:layout_marginTop="10dp"
        android:layout_marginLeft="10dp"
@@ -23,6 +23,7 @@
            <Button
                android:text="举报"
                android:background="@null"
+               android:textColor="#5F7EFA"
                android:id="@+id/question_detail_jubao"
                android:layout_width="50dp"
                android:layout_height="30dp" />
@@ -44,6 +45,7 @@
                android:layout_height="25dp" />
            <Button
                android:text="分享"
+               android:textColor="#5F7EFA"
                android:background="@null"
                android:id="@+id/question_detail_fenxiang"
                android:layout_width="50dp"

@@ -2,6 +2,7 @@ package com.example.mac.oncqupthands.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.example.mac.oncqupthands.R;
 import com.example.mac.oncqupthands.adapter.CustomVIewPager;
 import com.example.mac.oncqupthands.adapter.mFragmentPagerAdapter;
 import com.example.mac.oncqupthands.presenter.QuesActPresenter;
+import com.example.mac.oncqupthands.utils.ToastUtil;
 import com.example.mac.oncqupthands.view.fragment.KebiaoFragment;
 import com.example.mac.oncqupthands.view.fragment.QuesFragment;
 import com.example.mac.oncqupthands.view.fragment.UserFragment;
@@ -62,6 +64,11 @@ public class QuestionListActivity extends AppCompatActivity implements IQuestion
                     viewPager.setCurrentItem(0);
                     return true;
                 case R.id.navigation_question:
+                    if(!LoginActivity.isLogin)
+                    {
+                        Intent intent = new Intent(QuestionListActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                    }
                     viewPager.setCurrentItem(1);
                     return true;
                 case R.id.navigation_user:

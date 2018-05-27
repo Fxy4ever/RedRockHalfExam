@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.mac.oncqupthands.bean.QuestionDetailBean;
@@ -89,6 +90,7 @@ public class JsonUtil<T> {
             String reward = jsonObject.getString("reward");
             String disappearTime= jsonObject.getString("disappear_at");
             String kind = jsonObject.getString("kind");
+            String is_self = jsonObject.getString("is_self");
             String nickname = jsonObject.getString("questioner_nickname");
             String questioner_photo_thumbnail_src = jsonObject.getString("questioner_photo_thumbnail_src");
             String questioner_gender = jsonObject.getString("questioner_gender");
@@ -98,6 +100,7 @@ public class JsonUtil<T> {
             bean.setReward(reward);
             bean.setDisappear_at(disappearTime);
             bean.setKind(kind);
+            bean.setIs_self(Integer.valueOf(is_self));
             bean.setQuestioner_nickname(nickname);
             bean.setQuestioner_photo_thumbnail_src(questioner_photo_thumbnail_src);
             bean.setQuestioner_gender(questioner_gender);
@@ -116,6 +119,13 @@ public class JsonUtil<T> {
                     bean1.setCreated_at(jsonObject1.getString("created_at"));
                     bean1.setPraise_num(jsonObject1.getString("praise_num"));
                     bean1.setComment_num(jsonObject1.getString("comment_num"));
+                    String photo_url = jsonObject1.getString("photo_url");
+                    List<String> list1 = new ArrayList<>();
+                    String[] url = photo_url.split("");
+                    for (int j = 0; j < url.length; j++) {
+                        list1.add(url[j]);
+                    }
+                    bean1.setPhoto_url(list1);
                     bean1.setIs_adopted(jsonObject1.getString("is_adopted"));
                     bean1.setIs_praised(jsonObject1.getInt("is_praised"));
                     bean.getAnswers().add(bean1);
@@ -150,6 +160,7 @@ public class JsonUtil<T> {
     }
 
     public static void AddRemardInfo(String response, List<RemarkBean> datalist){
+        Log.d("Fxy", "AddRemardInfo: "+response);
         try {
             JSONObject jsonObject = new JSONObject(response);
             if(!jsonObject.isNull("data")){
@@ -162,6 +173,7 @@ public class JsonUtil<T> {
                     bean.setCreated_at(jsonObject1.getString("created_at"));
                     bean.setNickname(jsonObject1.getString("nickname"));
                     bean.setGender(jsonObject1.getString("gender"));
+                    bean.setPhoto_thumbnail_src(jsonObject1.getString("photo_thumbnail_src"));
                     datalist.add(bean);
                 }
                 RemarkBean bean = new RemarkBean();

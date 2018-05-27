@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        user = (mUser) getApplication();
         init();
         initChenjin();
     }
@@ -73,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSucceed(String response) {
                         try {
+                            user.setIdNum(pass);
+                            user.setStuNum(acc);
                             JsonUtil.AddPersonInfo(response,LoginActivity.this);
                             new ToastUtil(LoginActivity.this
                                     ,R.layout.toast_layout

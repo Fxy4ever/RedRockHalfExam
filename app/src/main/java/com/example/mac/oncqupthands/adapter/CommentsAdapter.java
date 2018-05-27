@@ -49,6 +49,7 @@ public class CommentsAdapter<T> extends MultiLayoutBaseAdapter {
 
     @Override
     public int getItemCount() {
+        Log.d(TAG, "getItemCount: "+datalist.size());
         return datalist.size();
     }
 
@@ -67,6 +68,8 @@ public class CommentsAdapter<T> extends MultiLayoutBaseAdapter {
                 TextView content1 = baseHolder.getView(R.id.comment_content1);
                 ImageView gender = baseHolder.getView(R.id.comment_gender);
                 TextView name1 = baseHolder.getView(R.id.comment_username);
+                TextView com_size = baseHolder.getView(R.id.comment_size);
+                com_size.setText((datalist.size()-1)+"个评论");
                 try {
                     String gender1 = URLDecoder.decode(QuestionDetailAdapter.answersBean.getGender(),"UTF-8");
                     if(gender1.equals("女")){
@@ -93,18 +96,18 @@ public class CommentsAdapter<T> extends MultiLayoutBaseAdapter {
                 ShapeImageView avatar1 = baseHolder.getView(R.id.comment_answer_avatar);
                 ImageView gender1 = baseHolder.getView(R.id.comment_answer_gender);
                 try {
-                    String gender2 = URLDecoder.decode(QuestionDetailAdapter.answersBean.getGender(),"UTF-8");
+                    String gender2 = URLDecoder.decode(QuestionDetailAdapter.answersBean.getGender(),"utf-8");
                     if(gender2.equals("女")){
                         gender1.setBackgroundResource(R.drawable.girl);
                     }
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                name.setText(datalist.get(i).getNickname());
-                content.setText(datalist.get(i).getContent());
-                time1.setText(datalist.get(i).getCreated_at().substring(0,10));
+                name.setText(datalist.get(i-1).getNickname());
+                content.setText(datalist.get(i-1).getContent());
+                time1.setText(datalist.get(i-1).getCreated_at().substring(0,10));
                 ImageLoader.with(getContext())
-                        .load(datalist.get(i).getPhoto_thumbnail_src())
+                        .load(UrlUtil.addS(datalist.get(i-1).getPhoto_thumbnail_src()))
                         .into(avatar1)
                         .apply(options)
                         .display();

@@ -24,6 +24,7 @@ import com.example.mac.oncqupthands.adapter.QuestionDetailAdapter;
 import com.example.mac.oncqupthands.adapter.QuestionListAdapter;
 import com.example.mac.oncqupthands.bean.QuestionDetailBean;
 import com.example.mac.oncqupthands.config.Api;
+import com.example.mac.oncqupthands.mUser;
 import com.example.mac.oncqupthands.utils.JsonUtil;
 import com.example.mac.oncqupthands.utils.NetUtil;
 
@@ -43,11 +44,12 @@ public class QuestionDetailActivity extends AppCompatActivity {
     private LinearLayout help;
     private List<QuestionDetailBean> datalist;
     private int layout[] ={R.layout.detail_header,R.layout.detail_normal,R.layout.question_footer};
-
+    private mUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_detail);
+        user= (mUser) getApplication();
         initView();
         initRecyclerView();
         initChenjin();
@@ -104,8 +106,8 @@ public class QuestionDetailActivity extends AppCompatActivity {
     private void initRecyclerView(){
         Map<String,String> map = new HashMap<>();
         map.put("question_id",questionId);
-        map.put("idNum","091219");
-        map.put("stuNum","2017211851");
+        map.put("idNum",user.getIdNum());
+        map.put("stuNum",user.getStuNum());
         NetUtil.Post(Api.getDetailedInfo, map, new NetUtil.Callback() {
             @Override
             public void onSucceed(String response) {

@@ -2,13 +2,23 @@ package com.example.mac.oncqupthands.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.frecyclerview.BaseHolder;
@@ -20,9 +30,11 @@ import com.example.mac.oncqupthands.mUser;
 import com.example.mac.oncqupthands.utils.NetUtil;
 import com.example.mac.oncqupthands.utils.ShapeImageView;
 import com.example.mac.oncqupthands.utils.TimeUtil;
+import com.example.mac.oncqupthands.utils.ToastUtil;
 import com.example.mac.oncqupthands.utils.UrlUtil;
 import com.example.mac.oncqupthands.view.activity.AQuestionActivity;
 import com.example.mac.oncqupthands.view.activity.CommentActivity;
+import com.example.mac.oncqupthands.view.activity.LoginActivity;
 import com.example.mac.oncqupthands.view.activity.QuestionDetailActivity;
 
 import org.json.JSONException;
@@ -117,6 +129,7 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                 }
                 break;
             case 1:
+                final LinearLayout parent = baseHolder.getView(R.id.item_parent);
                 ImageView avatar1 = baseHolder.getView(R.id.detail_normal_avatar);
                 TextView name = baseHolder.getView(R.id.detail_normal_name);
                 ImageView gender2 = baseHolder.getView(R.id.detail_normal_gender);
@@ -126,6 +139,44 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                 final TextView good_num = baseHolder.getView(R.id.detail_normal_good_num);
                 ImageButton commit = baseHolder.getView(R.id.detail_normal_commit);
                 final ImageButton good = baseHolder.getView(R.id.detail_normal_good);
+                final Button button = baseHolder.getView(R.id.detail_normal_accept);
+
+                if(datalist.get(0).getAnswers().get(i-1).getIs_adopted().equals("1")){
+                    if(datalist.get(0).getIs_self()==1){
+                        button.setText("已采纳");
+                        button.setVisibility(View.VISIBLE);
+                    }
+                }else{
+                    if(datalist.get(0).getIs_self()==1){
+                        button.setVisibility(View.VISIBLE);
+                        button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Map<String,String> map = new HashMap<>();
+                                map.put("stuNum",user.getStuNum());
+                                map.put("idNum",user.getIdNum());
+                                map.put("answer_id",datalist.get(0).getAnswers().get(i-1).getId());
+                                map.put("question_id",QuestionListAdapter.question_id);
+                                NetUtil.Post(Api.adopt, map, new NetUtil.Callback() {
+                                    @Override
+                                    public void onSucceed(String response) throws JSONException {
+                                        new ToastUtil(getContext()
+                                                ,R.layout.toast_layout
+                                                ,"采纳成功")
+                                                .setColor(Color.WHITE,Color.BLACK)
+                                                .show(3000);
+                                        button.setText("已采纳");
+                                    }
+
+                                    @Override
+                                    public void onFailed(String response) throws JSONException {
+                                        Log.d(TAG, "onFailed: "+response);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
                 Log.d("Fxy", "onBinds: "+datalist.get(0).getAnswers().size());
                 num1 = Integer.valueOf(datalist.get(0).getAnswers().get(i-1).getPraise_num());
                 if(datalist.get(0).getAnswers().size()!=0){
@@ -146,22 +197,65 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                     commit_num.setText(datalist.get(0).getAnswers().get(i-1).getComment_num());
                     good_num.setText(datalist.get(0).getAnswers().get(i-1).getPraise_num());
                 }
+
+                View contentView1 = LayoutInflater.from(getContext()).inflate(R.layout.popuplayout7,null);
+                final PopupWindow popupWindow1 = new PopupWindow(contentView1, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,true);
+                popupWindow1.setTouchable(true);
+                popupWindow1.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                final InputMethodManager m1=(InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                m1.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                final EditText comment1 = contentView1.findViewById(R.id.detail_comment_edit);
+                Button button1 = contentView1.findViewById(R.id.detail_comment_commit);
                 commit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        popupWindow1.showAtLocation(parent, Gravity.BOTTOM,0,0);
                     }
                 });
+                button1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Map<String,String> map = new HashMap<>();
+                        map.put("stuNum",user.getStuNum());
+                        map.put("idNum",user.getIdNum());
+                        map.put("answer_id",datalist.get(0).getAnswers().get(i-1).getId());
+                        map.put("content",comment1.getText().toString());
+                        if(comment1.getText().toString().length()>0){
+                            NetUtil.Post(Api.remark, map, new NetUtil.Callback() {
+                                @Override
+                                public void onSucceed(String response) throws JSONException {
+                                    new ToastUtil(getContext()
+                                            ,R.layout.toast_layout
+                                            ,"评论成功")
+                                            .setColor(Color.WHITE,Color.BLACK)
+                                            .show(3000);
+                                }
+
+                                @Override
+                                public void onFailed(String response) throws JSONException {
+                                    new ToastUtil(getContext()
+                                            ,R.layout.toast_layout
+                                            ,"评论失败"+response)
+                                            .setColor(Color.WHITE,Color.BLACK)
+                                            .show(3000);
+                                }
+                            });
+                        }
+                    }
+                });
+                user = (mUser) getContext().getApplicationContext();
+                final String stuNum = user.getStuNum();
+                final String idNum = user.getIdNum();
                 Map<String,String> map = new HashMap<>();
-                map.put("stuNum","2017211851");
-                map.put("idNum","091219");
+                map.put("stuNum",stuNum);
+                map.put("idNum",idNum);
                 map.put("answer_id",datalist.get(0).getAnswers().get(i-1).getId());
                 NetUtil.Post(Api.praise, map, new NetUtil.Callback() {
                     @Override
                     public void onSucceed(String response) throws JSONException {
                         Map<String,String> map = new HashMap<>();
-                        map.put("stuNum","2017211851");
-                        map.put("idNum","091219");
+                        map.put("stuNum",stuNum);
+                        map.put("idNum",idNum);
                         map.put("answer_id",datalist.get(0).getAnswers().get(i-1).getId());
                         NetUtil.Post(Api.cancelPraise, map, new NetUtil.Callback() {
                             @Override
@@ -188,8 +282,8 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                     public void onClick(View v) {
                         if (!isPraise) {
                             Map<String, String> map = new HashMap<>();
-                            map.put("stuNum", "2017211851");
-                            map.put("idNum", "091219");
+                            map.put("stuNum", stuNum);
+                            map.put("idNum", idNum);
                             map.put("answer_id",datalist.get(0).getAnswers().get(i-1).getId());
                             NetUtil.Post(Api.praise, map, new NetUtil.Callback() {
                                 @Override
@@ -211,8 +305,8 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                             });
                         } else {
                             Map<String, String> map = new HashMap<>();
-                            map.put("stuNum", "2017211851");
-                            map.put("idNum", "091219");
+                            map.put("stuNum", stuNum);
+                            map.put("idNum", idNum);
                             map.put("answer_id", datalist.get(0).getAnswers().get(i-1).getId());
                             NetUtil.Post(Api.cancelPraise, map, new NetUtil.Callback() {
                                 @Override

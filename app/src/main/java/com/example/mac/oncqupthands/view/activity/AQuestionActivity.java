@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.mac.oncqupthands.R;
 import com.example.mac.oncqupthands.adapter.QuestionListAdapter;
 import com.example.mac.oncqupthands.config.Api;
+import com.example.mac.oncqupthands.mUser;
 import com.example.mac.oncqupthands.utils.NetUtil;
 import com.example.mac.oncqupthands.utils.ToastUtil;
 
@@ -38,10 +39,12 @@ public class AQuestionActivity extends AppCompatActivity {
     private Button addPhoto;
     private TextView contentNum;
     private String mcontent;
+    private mUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aquestion);
+        user= (mUser) getApplication();
         initView();
         init();
         initChenjin();
@@ -79,8 +82,8 @@ public class AQuestionActivity extends AppCompatActivity {
                     Log.d("Fxy", "onClick: "+ QuestionListAdapter.question_id);
                     map.put("question_id",QuestionListAdapter.question_id);
                     map.put("content",mcontent);
-                    map.put("idNum","091219");
-                    map.put("stuNum","2017211851");
+                    map.put("idNum",user.getIdNum());
+                    map.put("stuNum",user.getStuNum());
                     NetUtil.Post(Api.answerQ, map, new NetUtil.Callback() {
                         @Override
                         public void onSucceed(String response) throws JSONException {

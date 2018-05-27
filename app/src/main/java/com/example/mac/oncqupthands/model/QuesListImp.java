@@ -25,7 +25,7 @@ public class QuesListImp implements QuesListInterface {
         try {
             String kind = URLEncoder.encode(kind1, "UTF-8");
             map.put("kind", kind);
-            map.put("size", "5");
+            map.put("size", "10");
             NetUtil.Post(Api.getQuestionList, map, new NetUtil.Callback() {
                 @Override
                 public void onSucceed(String response) {
@@ -50,7 +50,7 @@ public class QuesListImp implements QuesListInterface {
 
             String kind = URLEncoder.encode(kind1,"UTF-8");
             map.put("kind",kind);
-            map.put("size","5");
+            map.put("size","10");
             NetUtil.Post(Api.getQuestionList, map, new NetUtil.Callback() {
                 @Override
                 public void onSucceed(String response) {

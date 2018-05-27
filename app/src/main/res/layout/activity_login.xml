@@ -16,7 +16,7 @@
         android:layout_gravity="bottom"
         android:background="#FFFFFF"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="350dp"
         />
     <TextView
         android:layout_gravity="center|top"

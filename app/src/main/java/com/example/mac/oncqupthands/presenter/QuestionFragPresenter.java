@@ -77,13 +77,8 @@ public class QuestionFragPresenter {
         quesListInterface.refreshList(fragment.getKind(), new QuesListInterface.loadCallBack() {
             @Override
             public void Succeed(String response) {
-                Log.d("Fxy", "Succeed: "+datalist.size());
                 datalist.clear();
-                Log.d("Fxy", "Succeed: "+datalist.size());
-
                 JsonUtil.AddQuestionList(response,datalist);
-                Log.d("Fxy", "Succeed: "+datalist.size());
-
                 ((Activity)fragment.getmContext()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

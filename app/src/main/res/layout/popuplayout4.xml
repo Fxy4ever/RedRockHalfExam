@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:layout_height="150dp">
+
+    <View
+        android:layout_marginTop="30dp"
+        android:background="#F5F5F5"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:maxLength="4"
+            android:hint="yyyy"
+            android:id="@+id/pop_choose_year"
+            android:inputType="number"
+            android:layout_width="50dp"
+            android:layout_height="38dp"
+            android:textSize="15sp" />
+        <TextView
+            android:text="年"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <EditText
+            android:hint="mm"
+            android:maxLength="2"
+            android:textSize="15sp"
+            android:inputType="number"
+            android:id="@+id/pop_choose_month"
+            android:layout_width="50dp"
+            android:layout_height="38dp" />
+        <TextView
+            android:text="月"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <EditText
+            android:hint="dd"
+            android:maxLength="2"
+            android:textSize="15sp"
+            android:inputType="number"
+            android:id="@+id/pop_choose_day"
+            android:layout_width="50dp"
+            android:layout_height="38dp" />
+        <TextView
+            android:text="日"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <EditText
+            android:maxLength="2"
+            android:hint="hh"
+            android:textSize="15sp"
+            android:inputType="number"
+            android:id="@+id/pop_choose_hour"
+            android:layout_width="50dp"
+            android:layout_height="38dp" />
+        <TextView
+            android:text="时"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <EditText
+            android:hint="mm"
+            android:textSize="15sp"
+            android:inputType="number"
+            android:maxLength="2"
+            android:id="@+id/pop_choose_minute"
+            android:layout_width="50dp"
+            android:layout_height="38dp" />
+        <TextView
+            android:text="分"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/pop_choose_back"
+            android:background="@null"
+            android:text="取消"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/pop_choose_commit"
+            android:text="完成"
+            android:background="@null"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

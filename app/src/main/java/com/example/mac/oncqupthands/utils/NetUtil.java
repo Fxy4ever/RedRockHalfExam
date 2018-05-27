@@ -120,6 +120,8 @@ public class NetUtil{
         try{
             URL mURL = new URL(url);
             conn = (HttpURLConnection) mURL.openConnection();
+            conn.setRequestProperty("Accept-Charset", "UTF-8");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
             conn.setRequestMethod("POST");
             conn.setReadTimeout(5000);
             conn.setDoInput(true);

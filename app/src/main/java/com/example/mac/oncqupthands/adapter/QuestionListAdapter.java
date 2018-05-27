@@ -46,6 +46,8 @@ public class QuestionListAdapter<T> extends MultiLayoutBaseAdapter {
     private List<QuestionBean> datalist;
     public static  String question_id;
     public static String create_time;
+    private  boolean isStillLoad = true;
+    private String kind ;
     public QuestionListAdapter(Context context, List<QuestionBean> data, int[] layoutIds) {
         super(context, data, layoutIds);
         this.datalist =data;
@@ -61,6 +63,9 @@ public class QuestionListAdapter<T> extends MultiLayoutBaseAdapter {
         }
     }
 
+    public void setKind(String kind){
+        this.kind = kind;
+    }
     private final RequestOptions options = new RequestOptions()
             .setPreloadPic(R.mipmap.ic_launcher_round)
             .setErrorPic(R.mipmap.ic_launcher);
@@ -88,13 +93,17 @@ public class QuestionListAdapter<T> extends MultiLayoutBaseAdapter {
                 title.setText(datalist.get(i).getTitle());
                 content.setText(datalist.get(i).getDescription());
                 jifen.setText(datalist.get(i).getReward()+"积分");
-                try {
-                    String gender1 = URLDecoder.decode(datalist.get(i).getGender(),"UTF-8");
-                    if(gender1.equals("女")){
-                        gender.setBackgroundResource(R.drawable.girl);
+                if(kind.equals("情感")){
+                    try {
+                        String gender1 = URLDecoder.decode(datalist.get(i).getGender(),"UTF-8");
+                        if(gender1.equals("女")){
+                            gender.setBackgroundResource(R.drawable.girl);
+                        }else{
+                            gender.setBackgroundResource(R.drawable.boy);
+                        }
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
                     }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 }
                 if(MyonItemClickListener != null){
                     baseHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +127,9 @@ public class QuestionListAdapter<T> extends MultiLayoutBaseAdapter {
                 });
                 break;
             case 1:
-                loadMore();
+                if(isStillLoad){
+                    loadMore();
+                }
                 break;
         }
     }
@@ -127,17 +138,24 @@ public class QuestionListAdapter<T> extends MultiLayoutBaseAdapter {
         Map<String,String> map = new HashMap<>();
         map.put("page",String.valueOf(page));
         try {
-            String kind = URLEncoder.encode("其他","UTF-8");
+            String kind = URLEncoder.encode(this.kind,"UTF-8");
             map.put("kind",kind);
-            map.put("size","5");
+            map.put("size","10");
             NetUtil.Post(Api.getQuestionList, map, new NetUtil.Callback() {
                 @Override
                 public void onSucceed(String response) {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
-                        if(!jsonObject.isNull("data")){
+                        if(jsonObject.getJSONArray("data").length()==0){
+                            isStillLoad=false;
+                            Log.d("Fxy", "onSucceed: noload");
+
+                        }else{
+
+                            Log.d("Fxy", "onSucceed: load");
                             JsonUtil.AddQuestionList(response,datalist);
                             notifyDataSetChanged();
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -1,7 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="#000000"
-    android:layout_height="240dp">
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:layout_height="300dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:text="添加话题"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/pop_add_commit"
+            android:layout_gravity="right|center"
+            android:textColor="#7195FA"
+            android:background="@null"
+            android:text="确定"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <EditText
+        android:textColor="#7195FA"
+        android:id="@+id/pop_add_edit"
+        android:background="@null"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#F5F5F5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <TextView
+        android:text="热门话题"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/pop_add_dawu"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="7dp"
+            android:text="大物"
+            android:textColor="#7195FA"
+            android:background="@drawable/btn_shape"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/pop_add_english"
+            android:text="英语"
+            android:textColor="#7195FA"
+            android:background="@drawable/btn_shape"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/pop_add_xiandai"
+            android:text="线代"
+            android:textColor="#7195FA"
+            android:background="@drawable/btn_shape"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/pop_add_gaoshu"
+            android:text="高数"
+            android:textColor="#7195FA"
+            android:background="@drawable/btn_shape"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/pop_add_jihe"
+            android:text="几何"
+            android:textColor="#7195FA"
+            android:background="@drawable/btn_shape"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="7dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/pop_add_sixiu"
+            android:text="思修"
+            android:textColor="#7195FA"
+            android:background="@drawable/btn_shape"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
 
 </LinearLayout>

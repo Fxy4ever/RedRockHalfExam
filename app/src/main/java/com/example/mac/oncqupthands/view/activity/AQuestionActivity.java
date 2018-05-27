@@ -74,7 +74,7 @@ public class AQuestionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     mcontent = content.getText().toString();
-                    mcontent = URLEncoder.encode(mcontent,"UTF-8");
+                    mcontent = URLEncoder.encode(mcontent,"utf-8");
                     Map<String,String> map = new HashMap<>();
                     Log.d("Fxy", "onClick: "+ QuestionListAdapter.question_id);
                     map.put("question_id",QuestionListAdapter.question_id);

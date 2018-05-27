@@ -16,6 +16,7 @@ import com.example.frecyclerview.MultiLayoutBaseAdapter;
 import com.example.mac.oncqupthands.R;
 import com.example.mac.oncqupthands.bean.QuestionDetailBean;
 import com.example.mac.oncqupthands.config.Api;
+import com.example.mac.oncqupthands.mUser;
 import com.example.mac.oncqupthands.utils.NetUtil;
 import com.example.mac.oncqupthands.utils.ShapeImageView;
 import com.example.mac.oncqupthands.utils.TimeUtil;
@@ -52,6 +53,7 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
     public static QuestionDetailBean.AnswersBean answersBean;
     public static String quesion_ID;
     private boolean isPraise = false;
+    private mUser user;
     private int num1;
     public QuestionDetailAdapter(Context context,  List<QuestionDetailBean> data, int[] layoutIds) {
         super(context, data, layoutIds);
@@ -241,6 +243,7 @@ public class QuestionDetailAdapter<T> extends MultiLayoutBaseAdapter {
                         CONTENT = datalist.get(0).getDescription();
                         AS_ID = datalist.get(0).getAnswers().get(i-1).getId();
                         answersBean = datalist.get(0).getAnswers().get(i-1);
+                        Log.d(TAG, "onClick: "+answersBean.getNickname());
                         Intent intent = new Intent(getContext(), CommentActivity.class);
                         getContext().startActivity(intent);
                     }

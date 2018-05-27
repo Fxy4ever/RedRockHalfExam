@@ -64,6 +64,7 @@ public class QuesFragment extends Fragment implements IQuesFragment {
         presenter = new QuestionFragPresenter(this);
         presenter.loadData();
         QuestionListAdapter adapter = presenter.initAdapter();
+        adapter.setKind(kind);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         presenter.Refresh();

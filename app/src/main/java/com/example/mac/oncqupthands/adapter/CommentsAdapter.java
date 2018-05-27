@@ -14,6 +14,8 @@ import com.example.frecyclerview.MultiLayoutBaseAdapter;
 import com.example.mac.oncqupthands.R;
 import com.example.mac.oncqupthands.bean.RemarkBean;
 import com.example.mac.oncqupthands.utils.ShapeImageView;
+import com.example.mac.oncqupthands.utils.UrlUtil;
+import com.example.mac.oncqupthands.view.activity.QuestionDetailActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -21,6 +23,8 @@ import java.util.List;
 
 import config.RequestOptions;
 import start.ImageLoader;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by mac on 2018/5/26.
@@ -62,6 +66,7 @@ public class CommentsAdapter<T> extends MultiLayoutBaseAdapter {
                 TextView time = baseHolder.getView(R.id.comment_time);
                 TextView content1 = baseHolder.getView(R.id.comment_content1);
                 ImageView gender = baseHolder.getView(R.id.comment_gender);
+                TextView name1 = baseHolder.getView(R.id.comment_username);
                 try {
                     String gender1 = URLDecoder.decode(QuestionDetailAdapter.answersBean.getGender(),"UTF-8");
                     if(gender1.equals("女")){
@@ -73,12 +78,13 @@ public class CommentsAdapter<T> extends MultiLayoutBaseAdapter {
                 kind.setText("#"+QuestionDetailAdapter.KIND+"#");
                 content0.setText("              "+QuestionDetailAdapter.CONTENT);
                 ImageLoader.with(getContext())
-                            .load(QuestionDetailAdapter.answersBean.getPhoto_thumbnail_src())
+                            .load(UrlUtil.addS(QuestionDetailAdapter.answersBean.getPhoto_thumbnail_src()))
                             .into(avatar)
                             .apply(options)
                             .display();
                 time.setText(QuestionDetailAdapter.answersBean.getCreated_at().substring(0,10));
                 content1.setText(QuestionDetailAdapter.answersBean.getContent());
+                name1.setText(QuestionDetailAdapter.answersBean.getNickname());
                 break;
             case 1:
                 TextView name = baseHolder.getView(R.id.comment_answer_name);

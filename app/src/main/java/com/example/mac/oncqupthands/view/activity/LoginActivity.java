@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                                     ,R.layout.toast_layout
                                     ,"登陆成功")
                                     .setColor(Color.WHITE,Color.BLACK)
-                                    .setGravity(Gravity.CENTER,0,0)
                                     .show(3000);
                             isLogin=true;
                             LoginActivity.this.finish();
@@ -95,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                                 ,R.layout.toast_layout
                                 ,"登陆失败")
                                 .setColor(Color.WHITE,Color.BLACK)
-                                .setGravity(Gravity.CENTER,0,0)
                                 .show(3000);
                     }
                 });

@@ -10,9 +10,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.mac.oncqupthands.R;
@@ -33,6 +37,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private QuestionDetailAdapter adapter;
     private Button back;
+    private Button question_more;
     private TextView showNothing;
     private LinearLayout ignore;
     private LinearLayout help;
@@ -59,6 +64,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
     private void initView(){
         recyclerView = findViewById(R.id.question_detail_recylcerview);
         back = findViewById(R.id.question_back);
+        question_more = findViewById(R.id.question_more);
         showNothing = findViewById(R.id.question_showNothing);
         ignore = findViewById(R.id.question_ignore);
         help = findViewById(R.id.question_detail_help);
@@ -83,6 +89,15 @@ public class QuestionDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+        View contentView1 = LayoutInflater.from(QuestionDetailActivity.this).inflate(R.layout.popuplayout6,null);
+        final PopupWindow popupWindow1 = new PopupWindow(contentView1, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,true);
+        popupWindow1.setTouchable(true);
+        question_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow1.showAsDropDown(v);
             }
         });
     }

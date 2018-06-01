@@ -2,8 +2,11 @@
 =====
 
 
-由于时间不够 所以只做了大部分的邮问专栏
-
+由于时间不够 所以只做了部分的邮问专栏 也有许多不足<br>
+例如发问题需要设置标签才能发 否则闪退 (因为没进行判断) 
+还有部分ui 忘记设置白色背景导致透明（因为接口数据太少没考虑到）<br>
+没做设置按钮 所以说无法退出 就没做SharedPreference缓存<br>
+这些不足希望以后能够改正<br>
 
 
 实现了<br>
@@ -26,3 +29,9 @@
 4.`身体很重要！`<br>
 5....太多了<br>
 
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/1.jpg"/><br>
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/2.jpg"/><br>
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/3.jpg"/><br>
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/4.jpg"/><br>
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/5.jpg"/><br>
+<img width="300" height="560" src="https://github.com/fengxinyao1/RedRockHalfExam/blob/master/app/photo/6.jpg"/><br>

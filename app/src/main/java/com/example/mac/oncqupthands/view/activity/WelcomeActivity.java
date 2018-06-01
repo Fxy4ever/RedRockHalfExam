@@ -21,6 +21,7 @@ public class WelcomeActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                WelcomeActivity.this.finish();
                 Intent intent = new Intent(WelcomeActivity.this,QuestionListActivity.class);
                 startActivity(intent);
             }
